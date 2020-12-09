@@ -1,0 +1,32 @@
+<div *ngIf="products.length > 0; else noproducts">
+    <h3 class="text-center mt-2">PRODUCTOS</h3>
+    <ul class="list-group p-2">
+        <li class="list-group-item active" *ngFor="let prod of products">
+            <h4>{{prod.nombre | uppercase}}</h4>
+            <h6>{{prod.descripcion}}</h6>
+            <h6>{{prod.precio | currency}}</h6>
+            <div class="row">
+                <div class="col-md-6">
+                <button class="btn btn-danger btn-block" (click)="deleteProduct(prod)">Eliminar</button>
+                </div>
+                <div class="col-md-6">
+                <button class="btn btn-success btn-block" (click)="editProduct(prod)">Editar</button>
+                </div>
+            </div>
+            <div *ngIf="editing && editingProduct.id === prod.id">
+            <form (ngSubmit)="updateProduct()">
+                <input class="form-control mt-2" type="text" name="name" [(ngModel)]="prod.nombre">
+                <input class="form-control mt-2" type="text" name="description" [(ngModel)]="prod.descripcion">
+                <input class="form-control mt-2" type="number" name="price" [(ngModel)]="prod.precio" step="0.01">
+                <button class="btn btn-secondary btn-block mt-4" type="submit">Update</button>
+            </form>
+            </div>
+            <hr>
+        </li>
+    </ul>
+</div>
+
+<!-- CREAMOS UN TEMPLATE -->
+<ng-template #noproducts>
+    <p class="text-center mt-2">NO HAY PRODUCTOS</p>
+</ng-template>
